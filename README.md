@@ -43,10 +43,14 @@ doubleTapView.setAnimatedViewMeasure(100);
 
 doubleTapView.enableDoubleTap();
 doubleTapView.disableDoubleTap();
-doubleTapView.isDoubleTapEnabled()
+doubleTapView.isDoubleTapEnabled();
+
+doubleTapView.enableSingleTap();
+doubleTapView.disableSingleTap();
+doubleTapView.isSingleTapEnabled()
 ```
 
-### Listener:
+### Listeners:
 ```java
 doubleTapView.setOnDoubleTapEventListener(new DoubleTapView.onDoubleTapEventListener() {
             @Override
@@ -57,6 +61,16 @@ doubleTapView.setOnDoubleTapEventListener(new DoubleTapView.onDoubleTapEventList
         
 doubleTapView.removeOnDoubleTapEventListener();
 doubleTapView.getDoubleTapEventListener();
+
+doubleTapView.setOnSingleTapEventListener(new DoubleTapView.onSingleTapEventListener() {
+            @Override
+            public void onSingleTap() {
+                Toast.makeText(context, "Single Tap Callback", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+doubleTapView.removeOnSingleTapEventListener();
+doubleTapView.getSingleTapEventListener();
 ```
 
 ### Works with image libraries (like Picasso)
