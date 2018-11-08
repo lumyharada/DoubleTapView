@@ -36,4 +36,12 @@ class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
         return true;
     }
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent e) {
+        if (doubleTapView.getDoubleTapEventListener() != null) {
+            doubleTapView.getSingleTapEventListener().onSingleTap();
+        }
+        return true;
+    }
 }

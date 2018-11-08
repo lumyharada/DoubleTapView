@@ -27,7 +27,10 @@ public class DoubleTapView extends RelativeLayout {
 
     private Context context;
     private onDoubleTapEventListener doubleTapEventListener;
+    private onSingleTapEventListener singleTapEventListener;
+
     private boolean doubleTapEnabled = true;
+    private boolean singleTapEnabled = true;
 
     private View rootView;
     private ImageView background;
@@ -171,6 +174,74 @@ public class DoubleTapView extends RelativeLayout {
      * @param context view context
      */
     private void setDoubleTap(Context context) {
+        final GestureDetector gestureDetector = new GestureDetector(context, new GestureListener(context, this));
+        setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return gestureDetector.onTouchEvent(motionEvent);
+            }
+        });
+    }
+
+    /**
+     * Create a single tap listener
+     *
+     * @param eventListener double tap listener
+     */
+    public void setOnSingleTapEventListener(onSingleTapEventListener eventListener) {
+        singleTapEventListener = eventListener;
+    }
+
+    /**
+     * Remove the existent single tap listener
+     */
+    public void removeOnSingleTapEventListener() {
+        singleTapEventListener = null;
+    }
+
+    /**
+     * Get the single tap listener
+     *
+     * @return single tap event listener
+     */
+    @Nullable
+    public onSingleTapEventListener getSingleTapEventListener() {
+        return singleTapEventListener;
+    }
+
+    /**
+     * Enable single tap
+     * Consequently enable the callback, if exist
+     */
+    public void enableSingleTap() {
+        setSingleTap(context);
+        singleTapEnabled = true;
+    }
+
+    /**
+     * Disable single tap
+     * Consequently single the callback, if exist
+     */
+    public void disableSingleTap() {
+        setOnTouchListener(null);
+        singleTapEnabled = false;
+    }
+
+    /**
+     * Check if the single tap is enable
+     *
+     * @return single tap is enable
+     */
+    public boolean isSingleTapEnabled() {
+        return singleTapEnabled;
+    }
+
+    /**
+     * Set the touch listener to enable the single tap event and callback
+     *
+     * @param context view context
+     */
+    private void setSingleTap(Context context) {
         final GestureDetector gestureDetector = new GestureDetector(context, new GestureListener(context, this));
         setOnTouchListener(new OnTouchListener() {
             @Override
@@ -347,5 +418,12 @@ public class DoubleTapView extends RelativeLayout {
      */
     public interface onDoubleTapEventListener {
         void onDoubleTap();
+    }
+
+    /**
+     * Callback of single tap event
+     */
+    public interface onSingleTapEventListener {
+        void onSingleTap();
     }
 }
